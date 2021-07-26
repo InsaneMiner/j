@@ -56,6 +56,7 @@ std::vector<token> Lexer::tokenize(std::string code){
         if (code[x] == ';'){
             tokens.push_back(token());
             tokens[tokens.size()-1].value.append(1, ';');
+            tokens[tokens.size()-1].type = SEMI_COLON;
         }
         else if (code[x] == '\n'){
             continue;
@@ -64,6 +65,7 @@ std::vector<token> Lexer::tokenize(std::string code){
             if (x-last_value_end == 1 && code[last_value_end+1] == ' '){
                 tokens.push_back(token());
                 tokens[tokens.size()-1].value.append(1, '=');
+                tokens[tokens.size()-1].type = GetTokeNum(tokens[tokens.size()-1].value);
             }
             else{
                 tokens.push_back(token());
@@ -74,6 +76,7 @@ std::vector<token> Lexer::tokenize(std::string code){
                 }
                 last_value_end = x;
                 tokens.push_back(token());
+                tokens[tokens.size()-1].type = EQUAL_SIGN;
                 tokens[tokens.size()-1].value.append(1, '=');
             }
         }
@@ -97,7 +100,9 @@ std::vector<token> Lexer::tokenize(std::string code){
             }
             else{
                 tokens.push_back(token());
+                
                 tokens[tokens.size()-1].value.append(1, code[x]);
+                tokens[tokens.size()-1].type = NUMBER;
             }
         }
     }
